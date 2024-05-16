@@ -1,5 +1,7 @@
 package com.group1.bookstore.model;
 
+import com.group1.bookstore.Dto.UserDto;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +29,18 @@ public class User {
     
     @Column
     private String lastName;
+
+    @Column
+    private String role;
+
+    public static User toUser(UserDto dto) {
+        User user = new User();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setUsername(dto.getUsername());
+        user.setRole(dto.getRole());
+        return user;
+    }
 }
