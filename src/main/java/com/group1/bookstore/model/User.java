@@ -31,7 +31,7 @@ public class User {
     private String lastName;
 
     @Column
-    private String role;
+    private String role = "USER";
 
     public static User toUser(UserDto dto) {
         User user = new User();
