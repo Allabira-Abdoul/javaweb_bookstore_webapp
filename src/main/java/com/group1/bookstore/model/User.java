@@ -1,46 +1,37 @@
 package com.group1.bookstore.model;
 
-import com.group1.bookstore.Dto.UserDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.Data;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Entity
 @Data
-@NoArgsConstructor
-@Table
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(unique = true)
-    private String username;
-    
-    @Column
-    private String password;
-    
-    @Column(unique = true)
-    private String email;
-    
-    @Column
-    private String firstName;
-    
-    @Column
-    private String lastName;
+	private String email;
+	private String password;
+	private String role = "USER";
+	private String fullname;
 
-    @Column
-    private String role;
+	public User() {
+		super();
+	}
 
-    public static User toUser(UserDto dto) {
-        User user = new User();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setUsername(dto.getUsername());
-        user.setRole("USER");
-        return user;
-    }
+	public User(String email, String password, String role, String fullname) {
+
+		this.email = email;
+		this.password = password;
+		this.role = "USER";
+		this.fullname = fullname;
+	}
+
 }

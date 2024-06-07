@@ -1,12 +1,20 @@
 package com.group1.bookstore.service;
 
+
+import com.group1.bookstore.Dto.UserDto;
 import com.group1.bookstore.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 public interface UserService {
-    public User saveUser(User user);
-    public User getUserById(Long id);
-    public User getUserByUsername(String username);
-    public User getUserByEmail(String email);
-    public User updateUser(User user, Long id);
-    public void deleteUser(Long id);
+
+	User save (UserDto userDto);
+
+
 }
+
+
+
+
+

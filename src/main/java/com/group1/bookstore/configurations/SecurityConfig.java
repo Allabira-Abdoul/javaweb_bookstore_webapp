@@ -1,5 +1,7 @@
-package com.group1.bookstore.config;
+package com.group1.bookstore.configurations;
 
+import com.group1.bookstore.service.CustomSuccessHandler;
+import com.group1.bookstore.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.group1.bookstore.service.CustomSuccessHandler;
-import com.group1.bookstore.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
+	
+	
+	@Autowired
 	CustomSuccessHandler customSuccessHandler;
 	
 	@Autowired
@@ -28,6 +30,7 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		
@@ -35,10 +38,10 @@ public class SecurityConfig {
 		
 		.authorizeHttpRequests(request -> request.requestMatchers("/admin-page")
 				.hasAuthority("ADMIN").requestMatchers("/user-page").hasAuthority("USER")
-				.requestMatchers("/registration","/", "/css/**","/images/**").permitAll()
+				.requestMatchers("/registration", "/css/**").permitAll()
 				.anyRequest().authenticated())
 		
-		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
+		.formLogin(form -> form.loginPage("/registration").loginProcessingUrl("/login")
 				.successHandler(customSuccessHandler).permitAll())
 		
 		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
@@ -51,6 +54,7 @@ public class SecurityConfig {
 	
 	@Autowired
 	public void configure (AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService);
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 	}
+
 }
