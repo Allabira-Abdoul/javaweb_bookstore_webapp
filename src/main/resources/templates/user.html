@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,21 +42,66 @@
         /* Add more styles and components for your dashboard here */
     </style>
 </head>
+
 <body>
     <div class="header">
         <h1>USER Dashboard</h1>
     </div>
     <div class="container">
         <h2>Welcome, [[${user.getFullname()}]]</h2>
-        
+
         <span sec:authorize="isAuthenticated">
-        <a th:href="@{/logout}">
-         Logout
-        
-        </a>
-        
+            <a th:href="@{/logout}">
+                Logout
+            </a>
         </span>
 
+        <!-- Search Bar -->
+        <form th:action="@{/books/search}" method="get">
+            <div class="input-group mb-3 w-50">
+                <input type="text" name="title" class="form-control" placeholder="Search books by author or title...">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Filter by Genre -->
+        <form th:action="@{/books/filter}" method="get">
+            <div class="input-group mb-3 w-25">
+                <select name="genre" class="form-select">
+                    <option value="">All Categories</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="nonfiction">Non-Fiction</option>
+                    <option value="mystery">Mystery</option>
+                    <!-- Add more categories here -->
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+
+        <!-- List of Books -->
+        <h2>Books</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <!-- Add more columns if needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over the list of books and display them -->
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.genre}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    <!-- Add Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
