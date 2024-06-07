@@ -1,6 +1,11 @@
 package com.group1.bookstore.controller;
 
+import java.security.Principal;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,9 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @PostMapping
     public String addBook(@ModelAttribute Book book, Model model) {
         bookService.saveBook(book);
@@ -25,7 +33,7 @@ public class BookController {
     @GetMapping
     public String getAllBooks(Model model) {
         model.addAttribute("books", bookService.getAllBooks());
-        
+
         return "books";
     }
 
@@ -70,5 +78,47 @@ public class BookController {
 
         return "redirect:/books";
     }
-    
+
+    @GetMapping("/filter")
+    public String FilteredBooks(@RequestParam(name = "genre") String genre, Model model, Principal principal) {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
+        if (genre.isEmpty()) {
+            model.addAttribute("books", bookService.getAllBooks());
+        } else {
+            model.addAttribute("books", bookService.getBooksByGenre(genre));
+        }
+
+        return "user";
+    }
+
+    @GetMapping("/search")
+    public String SearchedBooks(@RequestParam(name = "title") String title, Model model, Principal principal) {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
+        if (title.isBlank()) {
+            List<Book> books = bookService.getAllBooks();
+            model.addAttribute("books", books);
+        } else {
+            Set<Book> books = new HashSet<>();
+
+            List<Book> books1 = bookService.getBookByTitleContaining(title);
+            for (Book book : books1) {
+                books.add(book);
+            }
+            List<Book> books2 = bookService.getBooksByAuthorContaining(title);
+            for (Book book : books2) {
+                books.add(book);
+            }
+            model.addAttribute("books", books);
+
+        }
+
+        return "user";
+    }
+
 }

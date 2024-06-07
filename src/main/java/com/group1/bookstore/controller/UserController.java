@@ -1,6 +1,7 @@
 package com.group1.bookstore.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.group1.bookstore.Dto.UserDto;
+import com.group1.bookstore.model.Book;
 import com.group1.bookstore.model.User;
+import com.group1.bookstore.service.BookService;
 import com.group1.bookstore.service.UserService;
 
 @Controller
@@ -22,17 +26,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    BookService bookService;
+
     @GetMapping("/registration")
     public String getRegistrationPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("dto", new UserDto());
         return "register";
     }
 
     @PostMapping("/registration")
-    public String saveUser(@ModelAttribute("user") User user, Model model) {
-        userService.saveUser(user);
+    public String saveUser(@ModelAttribute("user") UserDto dto, Model model) {
+        userService.saveUser(User.toUser(dto));
         model.addAttribute("message", "Registered Successfuly!");
-        return "register";
+        return "login";
     }
 
     @GetMapping("/login")
@@ -45,6 +52,12 @@ public class UserController {
     public String userPage(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
+
+        List<Book> books = bookService.getAllBooks();
+        model.addAttribute("books", books);
+
+        model.addAttribute("book", new Book());
+
         return "user";
     }
 

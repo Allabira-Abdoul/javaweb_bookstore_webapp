@@ -8,10 +8,8 @@ import com.group1.bookstore.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsernameOrEmail(String username, String email);
+    public User findByEmail(String email);
 
-    User findByEmail(String email);
-
-    User findByUsername(String username);
+    public User findByUsername(String username);
     
 }

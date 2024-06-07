@@ -31,7 +31,7 @@ public class User {
     private String lastName;
 
     @Column
-    private String role = "USER";
+    private String role;
 
     public static User toUser(UserDto dto) {
         User user = new User();
@@ -40,7 +40,7 @@ public class User {
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
         user.setUsername(dto.getUsername());
-        user.setRole(dto.getRole());
+        user.setRole("USER");
         return user;
     }
 }

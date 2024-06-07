@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Bookstore</title>
+</head>
+<body>
+    <h1>[[${user.getUsername()}]], welcome to the Online Bookstore</h1>
+    
+    <!-- Search Bar -->
+    <form th:action="@{/books/search}" method="get">
+        <input type="text" name="title" placeholder="Search books by author or title...">
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Filter by Genre -->
+    <form th:action="@{/books/filter}" method="get">
+        <select name="genre">
+            <option value="">All Categories</option>
+            <option value="fiction">Fiction</option>
+            <option value="nonfiction">Non-Fiction</option>
+            <option value="mystery">Mystery</option>
+            <!-- Add more categories here -->
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    
+    <!-- List of Books -->
+    <h2>Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <!-- Add more columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over the list of books and display them -->
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.genre}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

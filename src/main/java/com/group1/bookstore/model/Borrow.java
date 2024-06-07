@@ -1,5 +1,7 @@
 package com.group1.bookstore.model;
 
+import java.sql.Date;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,13 +15,18 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Long bookId;
+    
+    @Column
     private Long userId;
-    private String borrowDate;
-    private String returnDate;
-    private String status;
-    private String bookTitle;
-    private String bookAuthor;
-    private String bookGenre;
-    private String bookCoverImageUrl;    
+    
+    @Column
+    private Date borrowDate;
+    
+    @Column
+    private Date returnDate;
+    
+    @Column
+    private Boolean active;  
 }
