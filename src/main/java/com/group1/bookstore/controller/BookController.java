@@ -95,7 +95,7 @@ public class BookController {
         if (genre.isEmpty()) {
             model.addAttribute("books", bookService.getAllBooks());
         } else {
-            model.addAttribute("books", bookService.getBooksByGenre(genre));
+            model.addAttribute("books", bookService.getBooksByGenreContaining(genre));
         }
 
         return "user";

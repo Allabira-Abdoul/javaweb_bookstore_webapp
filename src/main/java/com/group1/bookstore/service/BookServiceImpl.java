@@ -54,6 +54,11 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public List<Book> getBooksByGenreContaining(String genre) {
+        return bookRepository.findByGenreContaining(genre);
+    }
+
+    @Override
     public Book updateBook(Book book, Long id) {
         Book existingBook = bookRepository.findById(id).orElse(null);
         if(existingBook != null) {

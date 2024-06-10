@@ -28,5 +28,5 @@ public class Borrow {
     private Date returnDate;
     
     @Column
-    private Boolean active;  
+    private Boolean returned;  
 }

@@ -13,6 +13,7 @@ public interface BookService {
     public List<Book> getBooksByAuthor(String author);
     public List<Book> getBooksByAuthorContaining(String author);
     public List<Book> getBooksByGenre(String genre);
+    public List<Book> getBooksByGenreContaining(String genre);
     public Book updateBook(Book book, Long id);
     public void deleteBook(Long id);
 
