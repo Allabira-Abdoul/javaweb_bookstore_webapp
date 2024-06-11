@@ -1,5 +1,7 @@
 package com.group1.bookstore.model;
 
+import java.util.List;
+
 //import java.util.List;
 
 import jakarta.persistence.*;
@@ -34,5 +36,11 @@ public class Book {
     
     @Column
     private Integer price;
+
+    @Column
+    @OneToMany(
+        mappedBy = "book"
+    )
+    private List<Review> reviews;
     
     }

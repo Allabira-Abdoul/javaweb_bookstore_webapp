@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group1.bookstore.model.Borrow;
+import com.group1.bookstore.model.User;
 import com.group1.bookstore.repository.BorrowRepository;
 
 @Service
@@ -25,8 +26,8 @@ public class BorrowServiceImpl implements BorrowService {
 
     public Borrow updateBorrow(Borrow borrow, Long id) {
         Borrow existingBorrow = borrowRepository.findById(id).orElse(null);
-        existingBorrow.setBookId(borrow.getBookId());
-        existingBorrow.setUserId(borrow.getUserId());
+        existingBorrow.setBook(borrow.getBook());
+        existingBorrow.setUser(borrow.getUser());
         existingBorrow.setBorrowDate(borrow.getBorrowDate());
         existingBorrow.setReturnDate(borrow.getReturnDate());
         existingBorrow.setReturned(borrow.getReturned());
@@ -39,7 +40,7 @@ public class BorrowServiceImpl implements BorrowService {
         return borrowRepository.findAll();
     }
 
-    public List<Borrow> getBorrowsByUserId(Long userId) {
-        return borrowRepository.findByUserId(userId);
+    public List<Borrow> getBorrowsByUser(User user) {
+        return borrowRepository.findByUser(user);
     }
 }

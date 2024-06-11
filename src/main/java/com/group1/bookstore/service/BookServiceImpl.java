@@ -35,27 +35,27 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<Book> getBookByTitleContaining(String title) {
-        return bookRepository.findByTitleContaining(title);
+        return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 
     @Override
     public List<Book> getBooksByAuthor(String author) {
-        return bookRepository.findByAuthor(author);
+        return bookRepository.findByAuthorContainingIgnoreCase(author);
     }
 
     @Override
     public List<Book> getBooksByAuthorContaining(String author) {
-        return bookRepository.findByAuthorContaining(author);
+        return bookRepository.findByAuthorContainingIgnoreCase(author);
     }
 
     @Override
     public List<Book> getBooksByGenre(String genre) {
-        return bookRepository.findByGenre(genre);
+        return bookRepository.findByGenreContainingIgnoreCase(genre);
     }
 
     @Override
     public List<Book> getBooksByGenreContaining(String genre) {
-        return bookRepository.findByGenreContaining(genre);
+        return bookRepository.findByGenreContainingIgnoreCase(genre);
     }
 
     @Override
