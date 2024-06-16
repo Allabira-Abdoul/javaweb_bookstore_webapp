@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-check-label {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header text-center">Edit Book</h5>
+        <div class="card-body">
+            <form action="/Book/update" method="post" enctype="multipart/form-data">
+                <!-- Hidden Input for Book ID -->
+                <input type="hidden" name="id" th:value="${book.id}">
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" th:value="${book.title}" required>
+                </div>
+
+                <!-- Author -->
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" class="form-control" name="author" th:value="${book.author}" required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" rows="3" name="description" th:text="${book.description}"></textarea>
+                </div>
+
+                <!-- Genre -->
+                <div class="form-group">
+                    <label>Genre</label>
+                    <input type="text" class="form-control" name="genre" th:value="${book.genre}">
+                </div>
+
+                <!-- Cover Image -->
+                <div class="form-group">
+                    <label>Current Cover Image</label>
+                    <br>
+                    <img src="/path/to/current/image" class="img-fluid" alt="Current Cover Image">
+                    <br>
+                    <label>Upload New Cover Image</label>
+                    <input type="file" class="form-control-file" name="coverImage" accept="image/*">
+                </div>
+
+                <!-- Amount and Price -->
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" name="amount" min="0" th:value="${book.amount}" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Price</label>
+                        <input type="number" class="form-control" name="price" min="0" step="0.01" th:value="${book.price}" required>
+                    </div>
+                </div>
+
+                <!-- Available -->
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="availableCheckbox" name="available"
+                           th:checked="${book.available}">
+                    <label class="form-check-label" for="availableCheckbox">Available</label>
+                    <!-- Hidden input field to ensure 'false' value is sent when checkbox is not checked -->
+                    <input type="hidden" name="available" value="false">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Update Book</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

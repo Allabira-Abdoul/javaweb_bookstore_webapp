@@ -5,9 +5,8 @@ package com.group1.bookstore.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Data
-@NoArgsConstructor
+@Entity
 @Table
 public class Book {
     @Id
@@ -16,23 +15,26 @@ public class Book {
 
     @Column(unique = true)
     private String title;
-    
+
     @Column
     private String author;
-    
+
     @Column
     private String description;
-    
+
     @Column
     private String genre;
-    
+
     @Column
-    private String coverImageUrl; // URL for the book cover image
+    private String coverImageUrl;
 
     @Column
     private Integer amount;
-    
+
     @Column
     private Integer price;
-    
-    }
+
+    @Column
+    private Boolean available;
+}
+
