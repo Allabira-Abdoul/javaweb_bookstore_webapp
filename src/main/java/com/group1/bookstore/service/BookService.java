@@ -14,19 +14,13 @@ public interface BookService {
    Book updateBook(Book book);
 
     void deleteBook(Long id);
+
+
+     Book getBookByTitle(String title);
+     List<Book> getBookByTitleContaining(String title);
+     List<Book> getBooksByAuthor(String author);
+     List<Book> getBooksByAuthorContaining(String author);
+     List<Book> getBooksByGenre(String genre);
+
+
 }
-
-
-
-//     Book saveBook(Book book);
-//     List<Book> getAllBooks();
-//     Book getBookById(Long id);
-//     Book getBookByTitle(String title);
-//     List<Book> getBookByTitleContaining(String title);
-//     List<Book> getBooksByAuthor(String author);
-//     List<Book> getBooksByAuthorContaining(String author);
-//     List<Book> getBooksByGenre(String genre);
-//    Book updateBook(Book book);
-//    void deleteBook(Long id);
-//
-//}

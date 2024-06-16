@@ -10,14 +10,14 @@ import com.group1.bookstore.model.Book;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-//    List<Book> findByGenre(String genre);
-//
-//    List<Book> findByAuthor(String author);
-//
-//    List<Book> findByAuthorContaining(String author);
-//
-//    List<Book> findByTitleContaining(String author);
-//
-//    Book findByTitle(String title);
+    List<Book> findByGenre(String genre);
+
+    List<Book> findByAuthor(String author);
+
+    List<Book> findByAuthorContaining(String author);
+
+    List<Book> findByTitleContaining(String author);
+
+    Book findByTitle(String title);
     
 }

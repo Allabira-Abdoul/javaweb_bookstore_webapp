@@ -42,70 +42,30 @@ public class BookServiceImpl implements BookService{
             bookRepository.deleteById(id);
         }
 
-    }
 
+        @Override
+        public Book getBookByTitle(String title) {
+            return bookRepository.findByTitle(title);
+        }
 
-//    @Autowired
-//    private BookRepository bookRepository;
-//
-//    @Override
-//    public Book saveBook(Book book) {
-//        return bookRepository.save(book);
-//    }
-//
-//    @Override
-//    public List<Book> getAllBooks() {
-//        return bookRepository.findAll();
-//    }
-//
-//    @Override
-//    public Book getBookById(Long id) {
-//        return bookRepository.findById(id).orElse(null);
-//    }
-//
-//    @Override
-//    public Book getBookByTitle(String title) {
-//        return bookRepository.findByTitle(title);
-//    }
-//
-//    @Override
-//    public List<Book> getBookByTitleContaining(String title) {
-//        return bookRepository.findByTitleContaining(title);
-//    }
-//
-//    @Override
-//    public List<Book> getBooksByAuthor(String author) {
-//        return bookRepository.findByAuthor(author);
-//    }
-//
-//    @Override
-//    public List<Book> getBooksByAuthorContaining(String author) {
-//        return bookRepository.findByAuthorContaining(author);
-//    }
-//
-//    @Override
-//    public List<Book> getBooksByGenre(String genre) {
-//        return bookRepository.findByGenre(genre);
-//    }
-//
-//    @Override
-//    public Book updateBook(Book book) {
-//        Book existingBook = bookRepository.findById(id).orElse(null);
-//        if(existingBook != null) {
-//            existingBook.setTitle(book.getTitle());
-//            existingBook.setAuthor(book.getAuthor());
-//            existingBook.setDescription(book.getDescription());
-//            existingBook.setGenre(book.getGenre());
-//            existingBook.setCoverImageUrl(book.getCoverImageUrl());
-//            return bookRepository.save(existingBook);
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteBook(Long id) {
-//        bookRepository.deleteById(id);
-//    }
-//
-//
-//}
+        @Override
+        public List<Book> getBookByTitleContaining(String title) {
+            return bookRepository.findByTitleContaining(title);
+        }
+
+        @Override
+        public List<Book> getBooksByAuthor(String author) {
+            return bookRepository.findByAuthor(author);
+        }
+
+        @Override
+        public List<Book> getBooksByAuthorContaining(String author) {
+            return bookRepository.findByAuthorContaining(author);
+        }
+
+        @Override
+        public List<Book> getBooksByGenre(String genre) {
+            return bookRepository.findByGenre(genre);
+        }
+
+}
