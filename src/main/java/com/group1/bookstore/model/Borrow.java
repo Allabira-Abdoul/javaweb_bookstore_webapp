@@ -15,12 +15,18 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long bookId;
-    
-    @Column
-    private Long userId;
-    
+    @ManyToOne
+    @JoinColumn(
+      name = "user_id"
+    )
+    private User user;
+  
+    @ManyToOne
+    @JoinColumn(
+      name = "book_id"
+    )
+    private Book book;
+
     @Column
     private Date borrowDate;
     
@@ -28,5 +34,5 @@ public class Borrow {
     private Date returnDate;
     
     @Column
-    private Boolean active;  
+    private Boolean returned;  
 }

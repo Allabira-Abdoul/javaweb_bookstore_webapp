@@ -1,9 +1,12 @@
 package com.group1.bookstore.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
@@ -21,6 +24,11 @@ public class User {
 	private String password;
 	private String role = "USER";
 	private String fullname;
+
+	@OneToMany(
+		mappedBy = "user"
+	)
+	private List<Review> reviews;
 
 	public User() {
 		super();

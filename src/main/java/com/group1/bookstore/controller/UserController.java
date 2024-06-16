@@ -2,8 +2,11 @@ package com.group1.bookstore.controller;
 
 
 import java.security.Principal;
+import java.util.List;
 
 import com.group1.bookstore.Dto.UserDto;
+import com.group1.bookstore.model.Book;
+import com.group1.bookstore.service.BookService;
 import com.group1.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +26,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BookService bookService;
 
 
 	@GetMapping("/registration")
@@ -46,6 +52,10 @@ public class UserController {
 	public String userPage (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
+
+		List<Book> books = bookService.getAllBooks();
+        model.addAttribute("books", books);
+
 		return "user";
 	}
 
