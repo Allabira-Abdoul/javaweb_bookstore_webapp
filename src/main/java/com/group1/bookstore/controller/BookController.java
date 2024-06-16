@@ -4,9 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.group1.bookstore.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +25,7 @@ import com.group1.bookstore.service.BookService;
 @Controller
 public class BookController {
     private BookService bookService;
+    private UserDetailsService userDetailsService;
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -36,7 +43,7 @@ public class BookController {
     }
 
     @GetMapping("/Book/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForms(Model model) {
         model.addAttribute("book", new Book());
         return "create_book";
     }
@@ -88,7 +95,7 @@ public class BookController {
     }
 
     @PostMapping("/Book/{id}")
-    public String updateBook(@PathVariable Long id,
+    public String updateBooks(@PathVariable Long id,
                              @ModelAttribute("book") Book book,
                              Model model) {
         Book existingBook = bookService.getBookById(id);
@@ -109,123 +116,109 @@ public class BookController {
         bookService.deleteBook(bookId);
         return "redirect:/Book";
     }
+
+
+    @PostMapping
+    public String addBook(@ModelAttribute Book book, Model model) {
+        bookService.saveBook(book);
+
+        return "redirect:/books";
+    }
+    @GetMapping("/book")
+    public String showAllContacts(Model model) {
+        List<Book> books = bookService.getAllBooks();
+        model.addAttribute("Book", books);
+        return "admin"; // Return the HTML template for displaying all events
+    }
+    @GetMapping("/book/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("Book", new Book());
+        return "admin";
+    }
+
+    @GetMapping
+    public String getAllBooks(Model model) {
+        model.addAttribute("books", bookService.getAllBooks());
+
+        return "books";
+    }
+
+    @GetMapping("/{id}")
+    public String getBookById(@PathVariable Long id, Model model) {
+        model.addAttribute("book", bookService.getBookById(id));
+
+        return "book_details";
+    }
+
+    @GetMapping("/title/{title}")
+    public String getBookByTitle(@PathVariable String title, Model model) {
+        model.addAttribute("book", bookService.getBookByTitle(title));
+
+        return "book_details";
+    }
+
+    @GetMapping("/author/{author}")
+    public String getBooksByAuthor(@PathVariable String author, Model model) {
+        model.addAttribute("books", bookService.getBooksByAuthor(author));
+
+        return "books";
+    }
+
+    @GetMapping("/genre/{genre}")
+    public String getBooksByGenre(@PathVariable String genre, Model model) {
+        model.addAttribute("books", bookService.getBooksByGenre(genre));
+
+        return "books";
+    }
+
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable Long id, Model model) {
+        bookService.deleteBook(id);
+
+        return "redirect:/books";
+    }
+
+    @GetMapping("/filter")
+    public String FilteredBooks(@RequestParam(name = "genre") String genre, Model model, Principal principal) {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
+        if (genre.isEmpty()) {
+            model.addAttribute("books", bookService.getAllBooks());
+        } else {
+            model.addAttribute("books", bookService.getBooksByGenre(genre));
+        }
+
+        return "user";
+    }
+
+    @GetMapping("/search")
+    public String SearchedBooks(@RequestParam(name = "title") String title, Model model, Principal principal) {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
+        if (title.isBlank()) {
+            List<Book> books = bookService.getAllBooks();
+            model.addAttribute("books", books);
+        } else {
+            Set<Book> books = new HashSet<>();
+
+            List<Book> books1 = bookService.getBookByTitleContaining(title);
+            for (Book book : books1) {
+                books.add(book);
+            }
+            List<Book> books2 = bookService.getBooksByAuthorContaining(title);
+            for (Book book : books2) {
+                books.add(book);
+            }
+            model.addAttribute("books", books);
+
+        }
+
+        return "user";
+    }
+
 }
-
-
-
-//    @Autowired
-//    private BookService bookService;
-//
-//    @Autowired
-//    private UserDetailsService userDetailsService;
-//
-//    @PostMapping
-//    public String addBook(@ModelAttribute Book book, Model model) {
-//        bookService.saveBook(book);
-//
-//        return "redirect:/books";
-//    }
-//    @GetMapping("/book")
-//    public String showAllContacts(Model model) {
-//        List<Book> books = bookService.getAllBooks();
-//        model.addAttribute("Book", books);
-//        return "admin"; // Return the HTML template for displaying all events
-//    }
-//    @GetMapping("/book/create")
-//    public String showCreateForm(Model model) {
-//        model.addAttribute("Book", new Book());
-//        return "admin";
-//    }
-//
-//    @GetMapping
-//    public String getAllBooks(Model model) {
-//        model.addAttribute("books", bookService.getAllBooks());
-//
-//        return "books";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String getBookById(@PathVariable Long id, Model model) {
-//        model.addAttribute("book", bookService.getBookById(id));
-//
-//        return "book_details";
-//    }
-//
-//    @GetMapping("/title/{title}")
-//    public String getBookByTitle(@PathVariable String title, Model model) {
-//        model.addAttribute("book", bookService.getBookByTitle(title));
-//
-//        return "book_details";
-//    }
-//
-//    @GetMapping("/author/{author}")
-//    public String getBooksByAuthor(@PathVariable String author, Model model) {
-//        model.addAttribute("books", bookService.getBooksByAuthor(author));
-//
-//        return "books";
-//    }
-//
-//    @GetMapping("/genre/{genre}")
-//    public String getBooksByGenre(@PathVariable String genre, Model model) {
-//        model.addAttribute("books", bookService.getBooksByGenre(genre));
-//
-//        return "books";
-//    }
-//
-//    @PutMapping("/{id}")
-//    public String updateBook(@PathVariable Long id, @ModelAttribute Book book, Model model) {
-//        bookService.updateBook(book, id);
-//
-//        return "redirect:/books";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String deleteBook(@PathVariable Long id, Model model) {
-//        bookService.deleteBook(id);
-//
-//        return "redirect:/books";
-//    }
-//
-//    @GetMapping("/filter")
-//    public String FilteredBooks(@RequestParam(name = "genre") String genre, Model model, Principal principal) {
-//
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-//        model.addAttribute("user", userDetails);
-//
-//        if (genre.isEmpty()) {
-//            model.addAttribute("books", bookService.getAllBooks());
-//        } else {
-//            model.addAttribute("books", bookService.getBooksByGenre(genre));
-//        }
-//
-//        return "user";
-//    }
-//
-//    @GetMapping("/search")
-//    public String SearchedBooks(@RequestParam(name = "title") String title, Model model, Principal principal) {
-//
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-//        model.addAttribute("user", userDetails);
-//
-//        if (title.isBlank()) {
-//            List<Book> books = bookService.getAllBooks();
-//            model.addAttribute("books", books);
-//        } else {
-//            Set<Book> books = new HashSet<>();
-//
-//            List<Book> books1 = bookService.getBookByTitleContaining(title);
-//            for (Book book : books1) {
-//                books.add(book);
-//            }
-//            List<Book> books2 = bookService.getBooksByAuthorContaining(title);
-//            for (Book book : books2) {
-//                books.add(book);
-//            }
-//            model.addAttribute("books", books);
-//
-//        }
-//
-//        return "user";
-//    }
-//
-//}
