@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.group1.bookstore.Dto.UserDto;
 import com.group1.bookstore.model.Book;
+import com.group1.bookstore.model.User;
 import com.group1.bookstore.service.BookService;
 import com.group1.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -64,6 +63,17 @@ public class UserController {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
 		model.addAttribute("user", userDetails);
 		return "admin";
+	}
+	@GetMapping("/User-detail")
+	public String showAllBooks(Model model) {
+		List<User> users = userService.getUsersByRole("USER");
+		model.addAttribute("users", users);
+		return "user_detail";
+	}
+	@PostMapping("/User/delete")
+	public String deleteUser(@RequestParam("id") Long userId) {
+		userService.deleteUserById(userId);
+		return "redirect:/User-detail";
 	}
 
 }
