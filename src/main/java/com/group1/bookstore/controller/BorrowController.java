@@ -1,6 +1,8 @@
 package com.group1.bookstore.controller;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,19 +23,33 @@ public class BorrowController {
     private BorrowService borrowService;
 
     @Autowired
-	UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
 
     @Autowired
     private BookService bookService;
 
-     @Autowired
-	 private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    @PostMapping("/{id}")
+    public String addBorrow(@PathVariable Long id, @ModelAttribute Borrow borrow, Model model, Principal principal) {
+        Book book = bookService.getBookById(id);
 
-    @PostMapping
-    public String addBorrow(@ModelAttribute Borrow borrow, Model model) {
+        borrow.setUser(userRepository.findByEmail(principal.getName()));
 
-        Book book = bookService.getBookById(borrow.getBook().getId());
+        borrow.setBook(book);
+
+        Date sqlDate = borrow.getBorrowDate();
+
+        LocalDate localDate = sqlDate.toLocalDate();
+
+        LocalDate newDate = localDate.plusDays(7);
+
+        Date newSqlDate = java.sql.Date.valueOf(newDate);
+
+        borrow.setReturnDate(newSqlDate);
+
+        borrow.setReturned(false);
 
         book.setAmount(book.getAmount() - 1);
 
@@ -51,10 +67,22 @@ public class BorrowController {
         return "borrows";
     }
 
-    @GetMapping("/{id}")
-    public String getBorrowById(@PathVariable Long id, Model model,Principal principal) {
+    @GetMapping("/user/{bookId}")
+    public String borrowPage(@PathVariable Long bookId, Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("user", userDetails);
+        model.addAttribute("user", userDetails);
+
+        model.addAttribute("book", bookService.getBookById(bookId));
+
+        model.addAttribute("borrow", new Borrow());
+
+        return "borrow";
+    }
+
+    @GetMapping("/{id}")
+    public String getBorrowById(@PathVariable Long id, Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
 
         model.addAttribute("borrow", borrowService.getBorrowById(id));
 
@@ -62,13 +90,14 @@ public class BorrowController {
     }
 
     @GetMapping("/user")
-    public String getBorrowsByUser(Model model,Principal principal) {
+    public String getBorrowsByUser(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("user", userDetails);
+        model.addAttribute("user", userDetails);
 
-        model.addAttribute("borrows", borrowService.getBorrowsByUser(userRepository.findByEmail(principal.getName())));
+        model.addAttribute("borrowHistory",
+                borrowService.getBorrowsByUser(userRepository.findByEmail(principal.getName())));
 
-        return "borrows";
+        return "borrow_history";
     }
 
     @PutMapping("/{id}")

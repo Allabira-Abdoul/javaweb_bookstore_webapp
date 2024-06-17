@@ -3,6 +3,7 @@ package com.group1.bookstore.model;
 import java.sql.Date;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity
@@ -28,6 +29,7 @@ public class Borrow {
     private Book book;
 
     @Column
+    @FutureOrPresent
     private Date borrowDate;
     
     @Column

@@ -38,7 +38,10 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String getBookById(@PathVariable Long id, Model model) {
+    public String getBookById(@PathVariable Long id, Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
         model.addAttribute("book", bookService.getBookById(id));
 
         return "book_details";

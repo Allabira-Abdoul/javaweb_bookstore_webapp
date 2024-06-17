@@ -18,29 +18,30 @@ public class Book {
 
     @Column(unique = true)
     private String title;
-    
+
     @Column
     private String author;
-    
-    @Column
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    
+
     @Column
     private String genre;
-    
+
     @Column
     private String coverImageUrl; // URL for the book cover image
 
     @Column
     private Integer amount;
-    
+
     @Column
     private Integer price;
 
     @Column
-    @OneToMany(
-        mappedBy = "book"
-    )
+    @OneToMany(mappedBy = "book")
     private List<Review> reviews;
-    
-    }
+
+    @OneToMany(mappedBy = "book")
+    private List<Borrow> borrows;
+
+}
