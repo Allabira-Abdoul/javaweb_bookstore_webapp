@@ -30,6 +30,11 @@ public class User {
 	)
 	private List<Review> reviews;
 
+	@OneToMany(
+		mappedBy = "user"
+	)
+	private List<Borrow> borrows;
+
 	public User() {
 		super();
 	}

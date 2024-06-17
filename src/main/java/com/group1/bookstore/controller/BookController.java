@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.group1.bookstore.service.CustomUserDetailsService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +26,10 @@ import com.group1.bookstore.service.BookService;
 
 @Controller
 public class BookController {
+    @Autowired
     private BookService bookService;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Value("${file.upload-dir}")
@@ -176,8 +181,11 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/{id}")
-    public String getBookById(@PathVariable Long id, Model model) {
+    @GetMapping("/books/{id}")
+    public String getBookById(@PathVariable Long id, Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
         model.addAttribute("book", bookService.getBookById(id));
 
         return "book_details";
@@ -212,7 +220,7 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/books/filter")
     public String FilteredBooks(@RequestParam(name = "genre") String genre, Model model, Principal principal) {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
@@ -227,7 +235,7 @@ public class BookController {
         return "user";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/books/search")
     public String SearchedBooks(@RequestParam(name = "title") String title, Model model, Principal principal) {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());

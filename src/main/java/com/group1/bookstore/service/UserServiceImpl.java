@@ -18,6 +18,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public User save(UserDto userDto) {
@@ -32,6 +34,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserById(Long id) {
 		userRepository.deleteById(id);
+	}
+	@Override
+	public void sendDeleteNotification(User user) {
+		String subject = "Account Deletion Notification";
+		String body = "Dear " + user.getFullname() + ",\n\nYour account with email " + user.getEmail() + " has been deleted from our system.\n\nThank you.";
+		emailService.sendEmail(user.getEmail(), subject, body);
 	}
 
 }
