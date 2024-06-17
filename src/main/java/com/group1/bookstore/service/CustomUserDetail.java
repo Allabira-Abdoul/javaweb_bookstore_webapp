@@ -3,6 +3,7 @@ package com.group1.bookstore.service;
 import java.util.Collection;
 import java.util.List;
 
+import com.group1.bookstore.model.Review;
 import com.group1.bookstore.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,10 @@ public class CustomUserDetail implements UserDetails {
 	
 	public String getFullname() {
 		return user.getFullname();
+	}
+
+	public List<Review> getReviews(){
+		return user.getReviews();
 	}
 
 	@Override
