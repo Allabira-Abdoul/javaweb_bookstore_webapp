@@ -41,6 +41,9 @@ public class Book {
     private Integer price;
 
     @Column
+    private Double averageReviews;
+    
+    @Column
     @OneToMany(mappedBy = "book")
     private List<Review> reviews;
 

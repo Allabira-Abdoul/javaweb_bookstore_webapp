@@ -28,7 +28,7 @@ public class Review {
   private Book book;
 
   @Column
-  private Integer rating; // Numerical score (e.g., 1-5 stars)
+  private Double rating; // Numerical score (e.g., 1-5 stars)
   
   @Column(columnDefinition = "TEXT")
   private String reviewText;

@@ -38,7 +38,7 @@ public class ReviewController {
         review.setBook(book);
 
         reviewService.saveReview(review);
-
+        
         return "redirect:/books/" + id;
     }
 
