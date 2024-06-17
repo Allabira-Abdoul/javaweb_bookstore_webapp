@@ -54,14 +54,14 @@ public class BookController {
                              RedirectAttributes redirectAttributes) {
         if (!coverImage.isEmpty()) {
             try {
-                byte[] bytes = coverImage.getBytes();
-                Path path = Paths.get(uploadDir + coverImage.getOriginalFilename());
-                Files.write(path, bytes);
-                book.setCoverImageUrl(path.toString());
+                String filename = coverImage.getOriginalFilename();
+                Path path = Paths.get(uploadDir, filename);
+                Files.write(path, coverImage.getBytes());
+                book.setCoverImageUrl("/css/coverpages/" + filename);
             } catch (IOException e) {
                 e.printStackTrace();
                 redirectAttributes.addFlashAttribute("error", "Failed to upload cover image");
-                return "redirect:/Book/create";
+                return "redirect:/books/create";
             }
         }
 
@@ -89,10 +89,43 @@ public class BookController {
     }
 
     @PostMapping("/Book/update")
-    public String updateBook(@ModelAttribute Book book) {
-        bookService.updateBook(book);
+    public String updateBook(@ModelAttribute Book updatedBook,
+                             @RequestParam("coverImage") MultipartFile coverImage,
+                             RedirectAttributes redirectAttributes) {
+
+        // Retrieve the existing book from the database
+        Book existingBook = bookService.getBookById(updatedBook.getId());
+
+        // Update the properties of the existing book with the new values
+        existingBook.setTitle(updatedBook.getTitle());
+        existingBook.setAuthor(updatedBook.getAuthor());
+        existingBook.setPrice(updatedBook.getPrice());
+        existingBook.setAmount(updatedBook.getAmount());
+        existingBook.setDescription(updatedBook.getDescription());
+        existingBook.setAvailable(updatedBook.getAvailable());
+
+        // Handle cover image update if provided
+        if (coverImage != null && !coverImage.isEmpty()) {
+            try {
+                String filename = coverImage.getOriginalFilename();
+                Path path = Paths.get(uploadDir, filename);
+                Files.write(path, coverImage.getBytes());
+                existingBook.setCoverImageUrl("/css/coverpages/" + filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+                redirectAttributes.addFlashAttribute("error", "Failed to upload cover image");
+                return "redirect:/Book/edit/" + updatedBook.getId();
+            }
+        }
+
+        // Save the updated book to the database
+        bookService.updateBook(existingBook);
+
+        // Redirect to the book list page with a success message
+        redirectAttributes.addFlashAttribute("message", "Book updated successfully!");
         return "redirect:/Book";
     }
+
 
     @PostMapping("/Book/{id}")
     public String updateBooks(@PathVariable Long id,

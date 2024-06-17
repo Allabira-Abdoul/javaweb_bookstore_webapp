@@ -70,7 +70,7 @@ public class UserController {
 		model.addAttribute("users", users);
 		return "user_detail";
 	}
-	@PostMapping("/User/delete")
+	@PostMapping("/user/delete")
 	public String deleteUser(@RequestParam("id") Long userId) {
 		userService.deleteUserById(userId);
 		return "redirect:/User-detail";
