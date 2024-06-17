@@ -96,6 +96,7 @@
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -173,8 +174,7 @@
                 <button type="submit" class="btn btn-primary">Filter</button>
             </div>
         </form>
-        <a class="btn btn-primary position-absolute end-0 translate-middle-x me-5" th:href="@{/borrow/user}">Borrow
-            History</a>
+        
 
         <h2>Books</h2>
 

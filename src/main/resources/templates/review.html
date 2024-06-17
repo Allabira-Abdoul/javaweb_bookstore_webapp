@@ -50,6 +50,7 @@
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -77,15 +78,25 @@
 
             <form th:action="@{/review/{id}(id=${book.id})}" th:object="${review}" method="post" class="w-50 p-3">
                 <div class="mb-3">
-                    <label for="reviewDate" class="form-label">Review Date</label>
-                    <input type="date" class="form-control" id="reviewDate" name="reviewDate" required>
-                    <div th:if="${#fields.hasErrors('reviewDate')}" th:errors="*{reviewDate}" class="text-danger"></div>
+                    <label for="rating" class="form-label">Rating</label>
+                    <select class="form-select" id="rating" name="rating" th:field="*{rating}" required>
+                        <option value="">Select rating</option>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="text-danger"></div>
                 </div>
-                <div th:if="${#fields.hasErrors('reviewDate')}" class="alert alert-danger" role="alert">
-                    The review date must be a future or present date.
+                <div class="mb-3">
+                    <label for="reviewContent" class="form-label">Review Content</label>
+                    <textarea class="form-control" id="reviewText" name="reviewText" th:field="*{reviewText}" required></textarea>
+                    <div th:if="${#fields.hasErrors('reviewText')}" th:errors="*{reviewText}" class="text-danger"></div>
                 </div>
                 <input type="submit" value="Review" class="btn btn-primary solid" />
             </form>
+
         </div>
     </div>
 </body>

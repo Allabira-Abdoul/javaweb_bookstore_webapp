@@ -50,8 +50,7 @@
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a th:href="@{/user-page}"
-                    class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                <a th:href="@{/user-page}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                     <h1>Book Store</h1>
                 </a>
 
@@ -61,7 +60,7 @@
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li> -->
                 </ul>
-                <!-- 
+<!-- 
                 <form  th:action="@{/books/search}" method="get">
                     <div class="input-group mb-3 w-50">
                         <input type="text" name="title" class="form-control" placeholder="Search books by author or title...">
@@ -69,10 +68,8 @@
                     </div>
                 </form>
                  -->
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" th:action="@{/books/search}"
-                    method="get">
-                    <input type="search" name="title" class="form-control" placeholder="Search books..."
-                        aria-label="Search">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" th:action="@{/books/search}" method="get">
+                    <input type="search" name="title" class="form-control" placeholder="Search books..." aria-label="Search">
                 </form>
 
                 <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -87,14 +84,15 @@
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><span class="dropdown-item" sec:authorize="isAuthenticated">
-                                <a style="text-decoration: none; color: red;" th:href="@{/logout}">
-                                    Logout
-                                </a>
-                            </span></li>
+                            <a style="text-decoration: none; color: red;" th:href="@{/logout}">
+                                Logout
+                            </a>
+                        </span></li>
                     </ul>
                 </div>
             </div>
@@ -113,11 +111,11 @@
                 <p>Amount available: <span th:text="${book.amount}"></span></p>
                 <p>Price: <span th:text="${book.price}"></span> FCFA</p>
                 <p th:if="${book.reviews.isEmpty()}"><span>0</span> / 5 From <span>0</span> reviews</p>
-                <p th:unless="${book.reviews.isEmpty()}"><span th:text="${book.reviews.stream().mapToInt(review -> book.reviews.getRating()).average().orElse(0.0)}"></span> / 5 From <span th:text="${book.reviews.size()}"></span> reviews</p>
+                <p th:unless="${book.reviews.isEmpty()}"><span th:text="${book.getReviews().stream().mapToDouble(review -> review.getRating()).average().getAsDouble()}"></span> / 5 From <span th:text="${book.reviews.size()}"></span> reviews</p>
                 <div th:unless="${book.reviews.contains(user)}">
-                    <a class="btn btn-primary" th:href="@{/review/{id}(id=${book.id})}">Add Review</a>
+                    <a class="btn btn-primary" th:href="@{/review/user/{id}(id=${book.id})}">Add Review</a>
                 </div>
-                <a class="btn btn-primary" th:href="@{/borrow/user/{id}(id=${book.id})}">Borrow</a>
+                <a class="btn btn-primary" th:href="@{/borrow/user/{id}(id=${book.id})}">Place An Order</a>
             </div>
             <div class="w-50 p-3 float-end">
                 <!-- <img class="img-fluid rounded float-end" th:src="@{'/images/' + ${book.coverImageUrl}}" alt=""> -->
