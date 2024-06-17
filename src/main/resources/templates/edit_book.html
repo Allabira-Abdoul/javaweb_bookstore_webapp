@@ -71,10 +71,10 @@
                 <div class="form-group">
                     <label>Current Cover Image</label>
                     <br>
-                    <img src="/path/to/current/image" class="img-fluid" alt="Current Cover Image">
+                    <img th:src="@{${book.coverImageUrl}}"  height="80px" width="80px" class="img-fluid" alt="Current Cover Image">
                     <br>
                     <label>Upload New Cover Image</label>
-                    <input type="file" class="form-control-file" name="coverImage" accept="image/*">
+                    <input type="file" class="form-control" name="coverImage" accept="image/*">
                 </div>
 
                 <!-- Amount and Price -->

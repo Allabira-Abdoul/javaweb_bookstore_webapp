@@ -15,6 +15,7 @@ public interface UserService {
 	User save (UserDto userDto);
 	List<User> getUsersByRole(String role);
 	void deleteUserById(Long id);
+	void sendDeleteNotification(User user);
 
 
 
