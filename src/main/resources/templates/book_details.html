@@ -118,8 +118,7 @@
                 <a class="btn btn-primary" th:href="@{/borrow/user/{id}(id=${book.id})}">Place An Order</a>
             </div>
             <div class="w-50 p-3 float-end">
-                <!-- <img class="img-fluid rounded float-end" th:src="@{'/images/' + ${book.coverImageUrl}}" alt=""> -->
-                <img class="img-fluid rounded float-end" th:src="@{/images/akali_1.jpg}" alt="">
+                <img class="img-fluid rounded float-end" th:src="@{'/images/' + ${book.coverImageUrl}}" alt="">
             </div>
         </div>
         <ul>
@@ -131,6 +130,14 @@
                 </div>
             </li>
         </ul>
+        <script>
+            const reviews = document.querySelectorAll('.book');
+            if (reviews.length > 5) {
+            for (let i = 5; i < reviews.length; i++) {
+                reviews[i].style.display = 'none';
+            }
+            }
+        </script>
         <!-- <ul>
             <li th:unless="${book.reviews.isEmpty()}" th:each="review : ${book.reviews}">
                 <div class="bo</div>ok">

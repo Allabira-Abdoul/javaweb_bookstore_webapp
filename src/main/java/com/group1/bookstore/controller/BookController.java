@@ -186,7 +186,11 @@ public class BookController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
 
-        model.addAttribute("book", bookService.getBookById(id));
+        Book book = bookService.getBookById(id);
+
+        book.setAverageReviews(book.getReviews().stream().mapToDouble(dreview -> dreview.getRating()).average().orElse(0.0));
+
+        model.addAttribute("book", book);
 
         return "book_details";
     }

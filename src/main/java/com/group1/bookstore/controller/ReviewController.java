@@ -39,6 +39,10 @@ public class ReviewController {
 
         reviewService.saveReview(review);
         
+        book.setAverageReviews(book.getReviews().stream().mapToDouble(dreview -> dreview.getRating()).average().orElse(0.0));
+
+        bookService.saveBook(book);
+
         return "redirect:/books/" + id;
     }
 

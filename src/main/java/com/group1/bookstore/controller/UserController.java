@@ -76,5 +76,13 @@ public class UserController {
 		return "redirect:/User-detail";
 	}
 
+	@GetMapping("/user/details")
+	public String editUser(Model model, Principal principal) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+		model.addAttribute("user", userDetails);
+
+		return "user_edit";
+	}
+
 }
 
