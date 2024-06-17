@@ -111,7 +111,7 @@
                 <p>Amount available: <span th:text="${book.amount}"></span></p>
                 <p>Price: <span th:text="${book.price}"></span> FCFA</p>
                 <p th:if="${book.reviews.isEmpty()}"><span>0</span> / 5 From <span>0</span> reviews</p>
-                <p th:unless="${book.reviews.isEmpty()}"><span th:text="${book.getReviews().stream().mapToDouble(review -> review.getRating()).average().getAsDouble()}"></span> / 5 From <span th:text="${book.reviews.size()}"></span> reviews</p>
+                <p th:unless="${book.reviews.isEmpty()}"><span></span> / 5 From <span th:text="${book.reviews.size()}"></span> reviews</p>
                 <div th:unless="${book.reviews.contains(user)}">
                     <a class="btn btn-primary" th:href="@{/review/user/{id}(id=${book.id})}">Add Review</a>
                 </div>
