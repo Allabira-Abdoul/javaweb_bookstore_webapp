@@ -1,5 +1,7 @@
 package com.group1.bookstore.model;
 
+import java.util.List;
+
 //import java.util.List;
 
 import jakarta.persistence.*;
@@ -44,8 +46,7 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<Borrow> borrows;
-
-}
+    
     private Boolean available;
 }
 
