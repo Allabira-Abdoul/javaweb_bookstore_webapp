@@ -57,7 +57,7 @@
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li> -->
                 </ul>
-<!-- 
+<!--
                 <form  th:action="@{/books/search}" method="get">
                     <div class="input-group mb-3 w-50">
                         <input type="text" name="title" class="form-control" placeholder="Search books by author or title...">
@@ -77,10 +77,10 @@
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         [[${user.getFullname()}]]
-                        <img th:src="@{/images/akali_1.jpg}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img th:src="@{/css/coverpages/akali_1.jpg}" alt="profile" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/details}">Profile Settings</a></li>
                         <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">

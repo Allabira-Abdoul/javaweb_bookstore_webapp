@@ -93,10 +93,10 @@
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         [[${user.getFullname()}]]
-                        <img th:src="@{/images/akali_1.jpg}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img th:src="@{/css/coverpages/akali_1.jpg}" alt="profile" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/details}">Profile Settings</a></li>
                         <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -180,7 +180,7 @@
         <h2>Books</h2>
 
         <div class="book" th:each="book : ${books}">
-            <img class="rounded" th:src="@{'/coverpages/' + ${book.coverImageUrl}}" alt="" width="100">
+            <img class="rounded" th:src="@{'/css/coverpages/' + ${book.coverImageUrl}}" alt="" width="100">
             <h3 th:text="${book.title}"></h3>
             <p>By <span th:text="${book.author}"></span></p>
             <p><span th:text="${book.price}"></span> FCFA</p>

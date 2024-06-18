@@ -60,7 +60,7 @@
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li> -->
                 </ul>
-<!-- 
+<!--
                 <form  th:action="@{/books/search}" method="get">
                     <div class="input-group mb-3 w-50">
                         <input type="text" name="title" class="form-control" placeholder="Search books by author or title...">
@@ -80,10 +80,10 @@
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         [[${user.getFullname()}]]
-                        <img th:src="@{/images/akali_1.jpg}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img th:src="@{/css/coverpages/akali_1.jpg}" alt="profile" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" th:href="@{user/details}">Profile Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/details}">Profile Settings</a></li>
                         <li><a class="dropdown-item" th:href="@{/borrow/user}">Borrow History</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -103,7 +103,7 @@
         <div class="review">
             <div class="card w-50">
                 <div class="card-body">
-                    <img th:src="@{'/images/' + ${book.coverImageUrl}}" class="card-img-top" alt="..." width="100">
+                    <img th:src="@{'/css/coverpages/' + ${book.coverImageUrl}}" class="card-img-top" alt="..." width="100">
                     <h5 class="card-title" th:text="${book.title}"></h5>
                     <p class="card-text" th:text="${book.author}"></p>
                     <p class="card-text"><span th:text="${book.price}"></span> FCFA</p>
