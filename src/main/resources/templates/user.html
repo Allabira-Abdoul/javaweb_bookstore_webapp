@@ -10,8 +10,8 @@
     <style>
         body {
             font-family: "poppins", sans-serif;
-            background-color: #0e2433;
-            color: white;
+            background-color: white;
+            color: black;
             margin: 0;
             padding: 0;
         }
@@ -30,7 +30,7 @@
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #0e2433;
+            background-color: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
@@ -191,6 +191,54 @@
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
     <script th:src="@{../css/assets/dist/js/bootstrap.bundle.min.js}"></script>
+
+    <script>
+        // Limit the number of books per page to 15
+        var booksPerPage = 15;
+        var books = document.querySelectorAll('.book');
+        if (books.length > booksPerPage) {
+            for (var i = booksPerPage; i < books.length; i++) {
+                books[i].style.display = 'none';
+            }
+        }
+
+        function showPage(pageNumber) {
+            var startIndex = (pageNumber - 1) * booksPerPage;
+            var endIndex = startIndex + booksPerPage;
+
+            for (var i = 0; i < books.length; i++) {
+                if (i >= startIndex && i < endIndex) {
+                    books[i].style.display = 'block';
+                } else {
+                    books[i].style.display = 'none';
+                }
+            }
+        }
+
+        function createPagination() {
+            var totalPages = Math.ceil(books.length / booksPerPage);
+
+            var paginationContainer = document.createElement('div');
+            paginationContainer.classList.add('pagination');
+
+            for (var i = 1; i <= totalPages; i++) {
+                var pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var pageNumber = parseInt(event.target.textContent);
+                    showPage(pageNumber);
+                });
+
+                paginationContainer.appendChild(pageLink);
+            }
+
+            document.body.appendChild(paginationContainer);
+        }
+
+        createPagination();
+    </script>
 </body>
 
 </html>
