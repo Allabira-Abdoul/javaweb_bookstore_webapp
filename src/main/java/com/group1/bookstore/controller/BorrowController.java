@@ -130,6 +130,6 @@ public class BorrowController {
 
         borrowService.saveBorrow(borrow);
 
-        return "redirect:borrow/admin-borrow";
+        return "redirect:/borrow/admin-borrow";
     }
 }
