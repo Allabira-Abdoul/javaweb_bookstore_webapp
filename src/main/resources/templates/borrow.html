@@ -103,7 +103,7 @@
         <div class="borrow">
             <div class="card w-50">
                 <div class="card-body">
-                    <img th:src="@{'/images/' + ${book.coverImageUrl}}" class="card-img-top" alt="..." width="100">
+                    <img th:src="@{'/coverpages/' + ${book.coverImageUrl}}" class="card-img-top" alt="..." width="100">
                     <h5 class="card-title" th:text="${book.title}"></h5>
                     <p class="card-text" th:text="${book.author}"></p>
                     <p class="card-text"><span th:text="${book.price}"></span> FCFA</p>

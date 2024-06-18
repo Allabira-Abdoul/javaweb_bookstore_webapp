@@ -180,7 +180,7 @@
         <h2>Books</h2>
 
         <div class="book" th:each="book : ${books}">
-            <img class="rounded" th:src="@{'/images/' + ${book.coverImageUrl}}" alt="" width="100">
+            <img class="rounded" th:src="@{'/coverpages/' + ${book.coverImageUrl}}" alt="" width="100">
             <h3 th:text="${book.title}"></h3>
             <p>By <span th:text="${book.author}"></span></p>
             <p><span th:text="${book.price}"></span> FCFA</p>

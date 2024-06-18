@@ -205,7 +205,7 @@
         <tbody>
         <tr th:each="book : ${books}">
 
-            <td><img th:src="@{'/images/' + ${book.coverImageUrl}}" alt="Book Cover" height="40px" width="40px"/></td>
+            <td><img th:src="@{'/coverpages/' + ${book.coverImageUrl}}" alt="Book Cover" height="40px" width="40px"/></td>
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.genre}"></td>
