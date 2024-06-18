@@ -41,9 +41,10 @@
 
         .book {
             display: inline-block;
-            margin: 20px;
-            /* margin-right: 20px;
-            margin-bottom: 20px; */
+            /* margin: 20px; */
+            margin-left: 60px;
+            /* margin-right: 20px; */
+            margin-bottom: 20px;
             width: 300px;
             text-align: center;
         }
@@ -118,7 +119,7 @@
             </a>
         </span>
     </div> -->
-    <div class="container">
+    <div id="container" class="container">
 
 
 
@@ -234,7 +235,7 @@
                 paginationContainer.appendChild(pageLink);
             }
 
-            document.body.appendChild(paginationContainer);
+            document.querySelector('#container').appendChild(paginationContainer);
         }
 
         createPagination();
