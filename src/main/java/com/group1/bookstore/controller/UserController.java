@@ -77,6 +77,9 @@ public class UserController {
 
 		return "user_edit";
 	}
-
+	@PostMapping("/place_order")
+	public String placeOrder(Model model, Principal principal) {
+		return "redirect:/user"; // Make sure "Place_Order.html" exists in your templates folder
+	}
 }
 

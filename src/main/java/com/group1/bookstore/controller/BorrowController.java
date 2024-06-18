@@ -57,8 +57,10 @@ public class BorrowController {
         bookService.saveBook(book);
 
         borrowService.saveBorrow(borrow);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
 
-        return "redirect:/user-page";
+        return "/Place_Order";
     }
 
     @GetMapping
