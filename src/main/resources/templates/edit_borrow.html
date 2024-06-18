@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Borrow</title>
+    <!-- Include necessary CSS -->
+</head>
+<body>
+
+<div class="container">
+    <h2>Edit Borrow</h2>
+    <form th:action="@{/borrow/edit/{id}(id=${borrow.id})}" th:object="${borrow}" method="post">
+        <div class="form-group">
+            <label for="returned">Returned:</label>
+            <input type="checkbox" class="form-check-input" id="returned" th:field="*{returned}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -58,12 +58,6 @@ public class UserController {
 		return "user";
 	}
 
-	@GetMapping("admin-page")
-	public String adminPage (Model model, Principal principal) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("user", userDetails);
-		return "admin";
-	}
 	@GetMapping("/User-detail")
 	public String showAllBooks(Model model) {
 		List<User> users = userService.getUsersByRole("USER");

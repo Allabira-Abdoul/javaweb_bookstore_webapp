@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.group1.bookstore.model.Borrow;
+import com.group1.bookstore.service.BorrowService;
 import com.group1.bookstore.service.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import com.group1.bookstore.service.BookService;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private BorrowService borrowService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -45,6 +49,19 @@ public class BookController {
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return "books";
+    }
+    @GetMapping("/admin-page")
+    public String showAllBook(Model model, Principal principal) {
+        List<Book> lastTwoBooks = bookService.getLastTwoBooks();
+        model.addAttribute("lastTwoBooks", lastTwoBooks);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+
+        // Fetch the top 5 most recent borrows
+        List<Borrow> recentBorrows = borrowService.findTop5ByOrderByBorrowDateDesc();
+        model.addAttribute("recentBorrows", recentBorrows);
+
+        return "admin";
     }
 
     @GetMapping("/Book/create")

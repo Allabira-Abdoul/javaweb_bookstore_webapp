@@ -11,4 +11,5 @@ public interface BorrowService {
     public Borrow getBorrowById(Long id);
     public List<Borrow> getBorrowsByUser(User user);
     public Borrow updateBorrow(Borrow borrow, Long id);
+    List<Borrow> findTop5ByOrderByBorrowDateDesc();
 }

@@ -25,26 +25,23 @@ public class User {
 	private String role = "USER";
 	private String fullname;
 
-	@OneToMany(
-		mappedBy = "user"
-	)
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders;
+
+	@OneToMany(mappedBy = "user")
 	private List<Review> reviews;
 
-	@OneToMany(
-		mappedBy = "user"
-	)
+	@OneToMany(mappedBy = "user")
 	private List<Borrow> borrows;
 
 	public User() {
-		super();
+		// Default constructor required by JPA
 	}
 
 	public User(String email, String password, String role, String fullname) {
-
 		this.email = email;
 		this.password = password;
-		this.role = "USER";
+		this.role = role;
 		this.fullname = fullname;
 	}
-
 }

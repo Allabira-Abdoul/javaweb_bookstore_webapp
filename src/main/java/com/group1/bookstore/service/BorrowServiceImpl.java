@@ -43,4 +43,8 @@ public class BorrowServiceImpl implements BorrowService {
     public List<Borrow> getBorrowsByUser(User user) {
         return borrowRepository.findByUser(user);
     }
+    @Override
+    public List<Borrow> findTop5ByOrderByBorrowDateDesc() {
+        return borrowRepository.findTop5ByOrderByBorrowDateDesc();
+    }
 }

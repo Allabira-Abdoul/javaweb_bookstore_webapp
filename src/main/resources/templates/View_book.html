@@ -50,7 +50,7 @@
                             <label>Cover Image:</label>
                             <img th:src="@{${book.coverImageUrl}}" alt="Book Cover" height="80px" width="800px" class="img-thumbnail">
                         </div>
-                        <a href="/books" class="btn btn-secondary">Back to List</a>
+                        <a href="/Book" class="btn btn-secondary">Back to List</a>
                         <a th:href="@{'/book/edit/' + ${book.id}}" class="btn btn-primary">Edit</a>
                     </form>
                 </div>

@@ -67,5 +67,9 @@ public class BookServiceImpl implements BookService{
         public List<Book> getBooksByGenre(String genre) {
             return bookRepository.findByGenre(genre);
         }
+    @Override
+    public List<Book> getLastTwoBooks() {
+        return bookRepository.findLastTwoBooks();
+    }
 
 }

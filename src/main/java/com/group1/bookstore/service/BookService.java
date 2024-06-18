@@ -21,6 +21,7 @@ public interface BookService {
      List<Book> getBooksByAuthor(String author);
      List<Book> getBooksByAuthorContaining(String author);
      List<Book> getBooksByGenre(String genre);
+    List<Book> getLastTwoBooks();
 
 
 }

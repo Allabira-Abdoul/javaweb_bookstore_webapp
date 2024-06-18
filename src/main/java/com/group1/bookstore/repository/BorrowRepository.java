@@ -12,5 +12,6 @@ import com.group1.bookstore.model.User;
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
 
     List<Borrow> findByUser(User user);
+    List<Borrow> findTop5ByOrderByBorrowDateDesc();
     
 }

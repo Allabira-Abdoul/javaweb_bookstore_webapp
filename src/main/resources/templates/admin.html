@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,17 @@
         .dashboard-section {
             margin-bottom: 30px;
         }
+        .book-carousel {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
         .book-card {
+            display: inline-block;
+            width: 300px; /* Adjust card width as needed */
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-right: 15px;
             transition: box-shadow 0.3s ease-in-out;
         }
         .book-card:hover {
@@ -46,7 +52,7 @@
                 <a class="nav-link" href="/User-detail">Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Orders</a>
+                <a class="nav-link" href="/borrow/admin-borrow">Orders</a>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -62,22 +68,21 @@
     <div class="row">
         <!-- Dashboard Summary Section -->
         <div class="col-lg-8">
-            <div class="dashboard-section">
-                <h2>Dashboard Summary</h2>
-                <p>Display summary statistics or recent activity here.</p>
-            </div>
 
-            <!-- Recent Orders Section -->
+            <!-- Most Recent Order Section -->
             <div class="dashboard-section">
-                <h2>Recent Orders</h2>
+                <h2>Most Recent Orders</h2>
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">
-                        Order #12345 - John Doe
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        Order #12346 - Jane Smith
-                    </a>
-                    <!-- Add more recent orders -->
+                    <!-- Iterate over recent borrows -->
+                    <div th:each="borrow : ${recentBorrows}">
+                        <a th:href="@{/borrow/details/{id}(id=${borrow.id})}" class="list-group-item list-group-item-action">
+                            <h5 class="card-title" th:text="${'Order #' + borrow.id + ' - ' + borrow.user.fullname}"></h5>
+                            <p class="card-text" th:text="${'Borrow Date: ' + borrow.borrowDate}"></p>
+                            <!-- Add more details as needed -->
+                        </a>
+                    </div>
+                    <!-- Handle case where no recent borrows are found -->
+                    <p th:if="${#lists.isEmpty(recentBorrows)}">No recent borrows found.</p>
                 </div>
             </div>
         </div>
@@ -86,22 +91,15 @@
         <div class="col-lg-4">
             <div class="dashboard-section">
                 <h2>Book Catalog</h2>
-                <div class="card book-card">
-                    <img src="book1.jpg" class="card-img-top" alt="Book 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Book Title 1</h5>
-                        <p class="card-text">Brief description of the book.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-
-                <!-- Add more book cards here -->
-                <div class="card book-card">
-                    <img src="book2.jpg" class="card-img-top" alt="Book 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Book Title 2</h5>
-                        <p class="card-text">Brief description of the book.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                <!-- Horizontal scrollable carousel for books -->
+                <div class="book-carousel">
+                    <div th:each="book : ${lastTwoBooks}" class="card book-card">
+                        <img th:src="@{${book.coverImageUrl}}" class="card-img-top" alt="Book cover">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${book.title}">Book Title</h5>
+                            <p class="card-text" th:text="${book.description}">Brief description of the book.</p>
+                            <a th:href="@{'/book/view/' + ${book.id}}" class="btn btn-primary">View Details</a>
+                        </div>
                     </div>
                 </div>
             </div>

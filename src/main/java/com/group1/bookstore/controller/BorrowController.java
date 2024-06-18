@@ -3,6 +3,7 @@ package com.group1.bookstore.controller;
 import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -106,5 +107,29 @@ public class BorrowController {
 
         return "redirect:/borrows";
     }
+    @GetMapping("/admin-borrow")
+    public String adminBorrow(Model model) {
+        List<Borrow> borrows = borrowService.getAllBorrows();
+        model.addAttribute("borrows", borrows);
+        return "admin_borrow"; // Return the name of your Thymeleaf template
+    }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Borrow borrow = borrowService.getBorrowById(id);
+        model.addAttribute("borrow", borrow);
+        return "edit_borrow"; // Ensure you have a Thymeleaf template 'edit_borrow.html' to handle this
+    }
 
+    // POST request to update returned status
+    @PostMapping("/edit/{id}")
+    public String updateBorrow(@PathVariable Long id, @ModelAttribute Borrow borrowForm, Model model) {
+        Borrow borrow = borrowService.getBorrowById(id);
+
+        // Update the returned status
+        borrow.setReturned(borrowForm.getReturned());
+
+        borrowService.saveBorrow(borrow);
+
+        return "redirect:borrow/admin-borrow";
+    }
 }
